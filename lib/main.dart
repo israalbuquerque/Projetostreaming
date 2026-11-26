@@ -26,3 +26,13 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// import 'package:flutter/material.dart';
+
+// import 'screen/tela_pesquisa.dart';
+
+// void main() {
+//   runApp(
+//     const MaterialApp(debugShowCheckedModeBanner: false, home: TelaPesquisa()),
+//   );
+// }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart'; // Ferramentas do Flutter
 import 'package:projetostreaming/models/filme.dart'; // A ficha Filme
 import 'package:projetostreaming/widgets/botao_principal.dart';
-import 'package:projetostreaming/widgets/botao_principal.dart'; // Nosso botão
+import 'package:projetostreaming/models/lista_favoritos.dart'; // Lista compartilhada
+import 'package:projetostreaming/screen/tela_minha_lista.dart'; // Nosso botão
 
-class TelaDetalhes extends StatelessWidget {
+class TelaDetalhes extends StatefulWidget {
   // A tela de detalhes. Sem estado por enquanto
   final Filme filme; // Guarda o filme recebido
 
@@ -13,7 +14,13 @@ class TelaDetalhes extends StatelessWidget {
   }); // Construtor: exige um filme
 
   @override // Reescreve o build
+  State<TelaDetalhes> createState() => _TelaDetalhesState();
+}
+
+class _TelaDetalhesState extends State<TelaDetalhes> {
   Widget build(BuildContext context) {
+    final filme = widget.filme;
+    final estaNaLista = ListaFavoritos.contem(filme);
     // Receita da tela
     return Scaffold(
       // Esqueleto da tela (sem AppBar: o botão voltar vai sobre a imagem)
@@ -181,16 +188,35 @@ class TelaDetalhes extends StatelessWidget {
                   const SizedBox(height: 12), // Espaço entre os botões
                   BotaoPrincipal(
                     // Botão de contorno: Minha lista
-                    texto: 'Adicionar à minha lista',
+                    texto: estaNaLista
+                        ? 'Remover da minha lista'
+                        : 'Adicionar à minha lista',
                     contorno: true, // Estilo só com borda
                     aoPressionar: () {
+                      setState(() {
+                        ListaFavoritos.alterar(filme);
+                      });
+
+                      final adicionado = ListaFavoritos.contem(filme);
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
-                            '${filme.titulo} adicionado à sua lista',
+                            adicionado
+                                ? '${filme.titulo} adicionado à sua lista'
+                                : '${filme.titulo} removido da sua lista',
                           ),
                         ),
                       );
+
+                      if (adicionado) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const TelaMinhaLista(),
+                          ),
+                        );
+                      }
                     },
                   ),
                   const SizedBox(height: 32), // Espaço final, para o último botão não colar no fim da tela

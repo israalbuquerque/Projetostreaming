@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart'; // Ferramentas do Flutter
 import 'package:projetostreaming/models/filme.dart'; // A ficha Filme
+import 'package:projetostreaming/screen/tela_Login.dart';
 import 'package:projetostreaming/widgets/banner_destaque.dart'; // O banner
 import 'package:projetostreaming/widgets/titulo_secao.dart'; // As seções de filmes
 import 'package:projetostreaming/screen/tela_explorar.dart';
+import 'package:projetostreaming/screen/tela_minha_lista.dart';
 
 class TelaHome extends StatelessWidget {
   // A tela inicial. Sem estado por enquanto
@@ -140,7 +142,19 @@ class TelaHome extends StatelessWidget {
             ),
           ],
         ),
-        centerTitle: false, // Alinha o título à esquerda
+        centerTitle: false,
+        actions: [
+          IconButton(
+            tooltip: 'Sair',
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const TelaLogin()),
+              );
+            },
+          ),
+        ],
       ),
 
       body: ListView(
@@ -167,6 +181,11 @@ class TelaHome extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const TelaExplorar()),
+            );
+          } else if (indice == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const TelaMinhaLista()),
             );
           }
         }, // Ação ao tocar em um item: nada por enquanto

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projetostreaming/models/filme.dart';
+import 'package:projetostreaming/screen/tela_pesquisa.dart';
+import 'package:projetostreaming/widgets/botao_principal.dart';
 import 'package:projetostreaming/widgets/cartao_filme.dart';
 import 'package:projetostreaming/widgets/titulo_secao.dart';
 
@@ -84,7 +86,18 @@ class _TelaExplorarState extends State<TelaExplorar> {
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+
           children: [
+            // BotaoPrincipal(
+            //   texto: 'Pesquisa detalhada',
+            //   aoPressionar: () {
+            //     Navigator.pushReplacement(
+            //       // Troca a tela atual (o login some da pilha)
+            //       context,
+            //       MaterialPageRoute(builder: (_) => const TelaPesquisa()),
+            //     );
+            //   },
+            // ),
             // 1. Campo de pesquisa visual
             TextField(
               controller: _buscarController,
@@ -159,6 +172,17 @@ class _TelaExplorarState extends State<TelaExplorar> {
                         return CartaoFilme(filme: itens[index]);
                       },
                     ),
+            ),
+
+            BotaoPrincipal(
+              texto: 'Pesquisa detalhada',
+              aoPressionar: () {
+                Navigator.pushReplacement(
+                  // Troca a tela atual (o login some da pilha)
+                  context,
+                  MaterialPageRoute(builder: (_) => const TelaPesquisa()),
+                );
+              },
             ),
           ],
         ),
